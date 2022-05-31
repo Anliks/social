@@ -50,7 +50,6 @@ public class CommentService {
 
     public List<Comment> getAllCommentForPost(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException("Post cannot be found"));
-
         List<Comment> comments = commentRepository.findAllByPost(post);
         return comments;
     }

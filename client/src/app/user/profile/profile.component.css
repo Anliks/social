@@ -1,9 +1,37 @@
+.musicPlayer {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 300px;
+  overflow-x: auto;
+}
+audio {
+  filter: sepia(20%) saturate(70%) grayscale(1) contrast(99%) invert(12%);
+  width: 200px;
+  height: 25px;
+}
+
+
+
+.head > h2{
+ position: absolute;
+  left: 100px;
+}
+
+
+
 .user-profile {
+  width: 600px;
   display: block;
-  margin: 0 auto;
-  width: 60%;
+  margin: auto;
+
   text-align: center;
   padding-top: 3rem;
+  position: absolute;
+  left: 450px;
+  top: 120px
+
 }
 
 .profile-image {
@@ -15,3 +43,4 @@
   margin-right: auto;
   margin-bottom: 2rem;
 }
+

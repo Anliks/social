@@ -7,6 +7,9 @@ import {NotificationService} from '../../service/notification.service';
 import {ImageUploadService} from '../../service/image-upload.service';
 import {UserService} from '../../service/user.service';
 import {EditUserComponent} from '../edit-user/edit-user.component';
+import {MusicUploadService} from '../../service/music-upload.service';
+import {Music} from '../../models/Music';
+import {Post} from '../../models/Post';
 
 @Component({
   selector: 'app-profile',
@@ -20,12 +23,16 @@ export class ProfileComponent implements OnInit {
   selectedFile: File;
   userProfileImage: File;
   previewImgURL: any;
+  musics: Music [];
+
+
 
   constructor(private tokenService: TokenStorageService,
               private postService: PostService,
               private dialog: MatDialog,
               private notificationService: NotificationService,
               private imageService: ImageUploadService,
+              private musicUploadService: MusicUploadService,
               private userService: UserService) {
   }
 
@@ -40,6 +47,11 @@ export class ProfileComponent implements OnInit {
       .subscribe(data => {
         this.userProfileImage = data.imageBytes;
       });
+    this.musicUploadService.getProfileMusic()
+      .subscribe(data => {
+        console.log(data);
+        this.musics = data;
+      });
   }
 
   onFileSelected(event): void {
@@ -50,6 +62,15 @@ export class ProfileComponent implements OnInit {
     reader.onload = () => {
       this.previewImgURL = reader.result;
     };
+  }
+
+  onMusicSelected(event): void {
+    this.selectedFile = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(this.selectedFile);
+    reader.onload;
+
+
   }
 
   openEditDialog(): void {
@@ -76,4 +97,13 @@ export class ProfileComponent implements OnInit {
         });
     }
   }
+  musicUpload(): void {
+    if(this.selectedFile != null) {
+      this.musicUploadService.uploadMusicToUser(this.selectedFile)
+        .subscribe(() => {
+          this.notificationService.showSnackBar("Profile music upload successfully")
+        })
+    }
+  }
+
 }

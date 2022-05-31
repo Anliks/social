@@ -75,7 +75,6 @@ public class ImageUploadService {
 
     public ImageModel getImageToUser(Principal principal) {
         User user = getUserByPrincipal(principal);
-
         ImageModel imageModel = imageRepository.findByUserId(user.getId()).orElse(null);
         if (!ObjectUtils.isEmpty(imageModel)) {
             imageModel.setImageBytes(decompressBytes(imageModel.getImageBytes()));
@@ -99,7 +98,7 @@ public class ImageUploadService {
         deflater.setInput(data);
         deflater.finish();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-        byte[] buffer = new byte[1024];
+        byte[] buffer = new byte[5000];
         while (!deflater.finished()) {
             int count = deflater.deflate(buffer);
             outputStream.write(buffer, 0, count);
@@ -117,7 +116,7 @@ public class ImageUploadService {
         Inflater inflater = new Inflater();
         inflater.setInput(data);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-        byte[] buffer = new byte[1024];
+        byte[] buffer = new byte[5000];
         try {
             while (!inflater.finished()) {
                 int count = inflater.inflate(buffer);

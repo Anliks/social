@@ -1,3 +1,19 @@
+
+<div class="head">
+<h2>Music</h2>
+<div  musicPlayer *ngFor="let music of musics" class="musicPlayer">
+  <h5>{{music.title}}</h5>
+  <audio controls="">
+    <source src="{{music.fileName}}">
+  </audio>
+</div>
+</div>
+<input type="file" style="display: none" #fileInput
+       (change)="onMusicSelected($event)">
+
+<button mat-button (click)="fileInput.click()">Pick File</button>
+<button mat-button *ngIf="selectedFile" (click)="musicUpload()">Upload</button>
+
 <div *ngIf="isUserDataLoaded" class="user-profile">
 
   <h1>Profile</h1>
@@ -32,3 +48,4 @@
   </div>
 
 </div>
+
